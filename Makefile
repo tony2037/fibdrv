@@ -25,7 +25,7 @@ unload:
 	sudo rmmod $(TARGET_MODULE) || true >/dev/null
 
 client: client.c
-	$(CC) -o $@ $^
+	$(CC) -g -o $@ $^
 
 PRINTF = env printf
 PASS_COLOR = \e[32;01m
