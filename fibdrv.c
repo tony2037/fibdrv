@@ -4,8 +4,11 @@
 #include <linux/init.h>
 #include <linux/kdev_t.h>
 #include <linux/kernel.h>
+#include <linux/limits.h>
 #include <linux/module.h>
 #include <linux/mutex.h>
+#include <linux/slab.h>
+
 
 MODULE_LICENSE("Dual MIT/GPL");
 MODULE_AUTHOR("National Cheng Kung University, Taiwan");
@@ -24,18 +27,30 @@ static struct cdev *fib_cdev;
 static struct class *fib_class;
 static DEFINE_MUTEX(fib_mutex);
 
-static unsigned long long fib_sequence(unsigned long long k)
+static unsigned long long *fib_sequence(int k)
 {
     /* FIXME: use clz/ctz and fast algorithms to speed up */
-    unsigned long long f[k + 2];
-
-    f[0] = 0;
-    f[1] = 1;
+    unsigned long long *f[k + 2];
+    for (size_t i = 0; i < (k + 2); i++) {
+        f[i] = kmalloc(2 * sizeof(unsigned long long), GFP_KERNEL);
+        if (f[i] == NULL) {
+            printk("kmalloc error");
+            return NULL;
+        }
+        f[i][0] = 0;
+        f[i][1] = 0;
+    }
+    f[0][0] = 0;
+    f[1][0] = 1;
 
     for (int i = 2; i <= k; i++) {
-        f[i] = f[i - 1] + f[i - 2];
+        // f[i] = f[i - 1] + f[i - 2];
+        char carry = 0;
+        if ((ULONG_MAX - f[i - 2][0]) <= f[i - 1][0])
+            carry = 1;
+        f[i][0] = f[i - 1][0] + f[i - 2][0];
+        f[i][1] = f[i - 1][1] + f[i - 2][1] + (unsigned long long) (carry);
     }
-
     return f[k];
 }
 
