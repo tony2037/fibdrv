@@ -60,7 +60,7 @@ static ssize_t fib_read(struct file *file,
                         size_t size,
                         loff_t *offset)
 {
-    buf[0] = 'Z';
+    memcpy(buf, "Ztex", 4);
     return (ssize_t) fib_sequence(*offset);
 }
 

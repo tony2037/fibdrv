@@ -12,7 +12,7 @@ int main()
     int fd;
     long long sz;
 
-    char buf[1];
+    char buf[8] = {0};
     char write_buf[] = "testing writing";
     int offset = 100;  // TODO: test something bigger than the limit
     int i = 0;
