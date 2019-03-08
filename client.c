@@ -35,8 +35,8 @@ int main()
         sz = read(fd, buf, 16);
         printf("Reading from " FIB_DEV
                " at offset %d, returned the sequence "
-               "%llu + (%d * %lu).\n",
-               i, sz, buf[8], ULONG_MAX);
+               "%llu + (%d * 18446744073709551616).\n",
+               i, sz, buf[8]);
 
     }
 
