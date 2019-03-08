@@ -75,8 +75,17 @@ static ssize_t fib_read(struct file *file,
                         size_t size,
                         loff_t *offset)
 {
-    memcpy(buf, "Ztex", 4);
-    return (ssize_t) fib_sequence(*offset);
+    // memcpy(buf, "Ztex", 4);
+    unsigned long long *f;
+    f = fib_sequence(*offset);
+    memset(buf, 0, 16);
+    for (size_t i = 0; i < 8; i++) {
+        buf[i] = (f[0] >> (4 * i)) & 0xFF;
+    }
+    for (size_t i = 8; i < 16; i++) {
+        buf[i] = (f[1] >> (4 * (i - 8))) & 0xFF;
+    }
+    return f[0];
 }
 
 /* write operation is skipped */
