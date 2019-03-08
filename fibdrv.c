@@ -24,10 +24,10 @@ static struct cdev *fib_cdev;
 static struct class *fib_class;
 static DEFINE_MUTEX(fib_mutex);
 
-static long long fib_sequence(long long k)
+static unsigned long long fib_sequence(unsigned long long k)
 {
     /* FIXME: use clz/ctz and fast algorithms to speed up */
-    long long f[k + 2];
+    unsigned long long f[k + 2];
 
     f[0] = 0;
     f[1] = 1;
