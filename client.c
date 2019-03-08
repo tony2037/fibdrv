@@ -31,7 +31,7 @@ int main()
 
     for (i = 0; i <= offset; i++) {
         lseek(fd, i, SEEK_SET);
-        sz = read(fd, buf, 1);
+        sz = read(fd, buf, 16);
         printf("Reading from " FIB_DEV
                " at offset %d, returned the sequence "
                "%lld.\n",
@@ -40,7 +40,7 @@ int main()
 
     for (i = offset; i >= 0; i--) {
         lseek(fd, i, SEEK_SET);
-        sz = read(fd, buf, 1);
+        sz = read(fd, buf, 16);
         printf("Reading from " FIB_DEV
                " at offset %d, returned the sequence "
                "%lld.\n",
