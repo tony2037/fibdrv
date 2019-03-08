@@ -1,4 +1,5 @@
 #include <fcntl.h>
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -34,8 +35,9 @@ int main()
         sz = read(fd, buf, 16);
         printf("Reading from " FIB_DEV
                " at offset %d, returned the sequence "
-               "%lld.\n",
-               i, sz);
+               "%llu + (%d * %lu).\n",
+               i, sz, buf[8], ULONG_MAX);
+
     }
 
     for (i = offset; i >= 0; i--) {
