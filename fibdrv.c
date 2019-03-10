@@ -27,6 +27,10 @@ static struct cdev *fib_cdev;
 static struct class *fib_class;
 static DEFINE_MUTEX(fib_mutex);
 
+static unsigned long long *adder(unsigned long long *k1, unsigned long long *k2)
+{
+}
+
 static unsigned long long *multiplier(unsigned long long *k1,
                                       unsigned long long *k2)
 {
@@ -51,7 +55,7 @@ static unsigned long long *fib_sequence(int k)
     for (int i = 2; i <= k; i++) {
         // f[i] = f[i - 1] + f[i - 2];
         char carry = 0;
-        if ((ULONG_MAX - f[i - 2][0]) <= f[i - 1][0])
+        if ((ULONG_MAX - f[i - 2][0]) < f[i - 1][0])
             carry = 1;
         f[i][0] = f[i - 1][0] + f[i - 2][0];
         f[i][1] = f[i - 1][1] + f[i - 2][1] + (unsigned long long) (carry);
