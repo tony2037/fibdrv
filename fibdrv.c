@@ -27,6 +27,11 @@ static struct cdev *fib_cdev;
 static struct class *fib_class;
 static DEFINE_MUTEX(fib_mutex);
 
+static unsigned long long *multiplier(unsigned long long *k1,
+                                      unsigned long long *k2)
+{
+}
+
 static unsigned long long *fib_sequence(int k)
 {
     /* FIXME: use clz/ctz and fast algorithms to speed up */
