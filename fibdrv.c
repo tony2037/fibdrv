@@ -51,25 +51,19 @@ static unsigned long long *fib_sequence(int k)
 {
     /* FIXME: use clz/ctz and fast algorithms to speed up */
     unsigned long long *f[k + 2];
-    for (size_t i = 0; i < (k + 2); i++) {
-        f[i] = kmalloc(2 * sizeof(unsigned long long), GFP_KERNEL);
-        if (f[i] == NULL) {
-            printk("kmalloc error");
-            return NULL;
-        }
-        f[i][0] = 0;
-        f[i][1] = 0;
+    f[0] = kmalloc(2 * sizeof(unsigned long long), GFP_KERNEL);
+    f[1] = kmalloc(2 * sizeof(unsigned long long), GFP_KERNEL);
+    if (f[0] == NULL || f[1] == NULL) {
+        printk("kmalloc error");
+        return NULL;
     }
+    f[0][1] = 0;
+    f[1][1] = 0;
     f[0][0] = 0;
     f[1][0] = 1;
 
     for (int i = 2; i <= k; i++) {
-        // f[i] = f[i - 1] + f[i - 2];
-        char carry = 0;
-        if ((ULONG_MAX - f[i - 2][0]) < f[i - 1][0])
-            carry = 1;
-        f[i][0] = f[i - 1][0] + f[i - 2][0];
-        f[i][1] = f[i - 1][1] + f[i - 2][1] + (unsigned long long) (carry);
+        f[i] = adder(f[i - 1], f[i - 1]);
     }
     return f[k];
 }
