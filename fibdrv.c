@@ -29,6 +29,17 @@ static DEFINE_MUTEX(fib_mutex);
 
 static unsigned long long *adder(unsigned long long *k1, unsigned long long *k2)
 {
+    unsigned long long *r = kmalloc(2 * sizeof(unsigned long long), GFP_KERNEL);
+    if (r == NULL) {
+        printk("kmalloc error");
+        return NULL;
+    }
+    char carry = 0;
+    if ((ULONG_MAX - k2[0]) < k1[0])
+        carry = 1;
+    r[0] = k1[0] + k2[0];
+    r[1] = k1[1] + k2[1] + (unsigned long long) (carry);
+    return r;
 }
 
 static unsigned long long *multiplier(unsigned long long *k1,
