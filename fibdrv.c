@@ -45,6 +45,7 @@ static unsigned long long *adder(unsigned long long *k1, unsigned long long *k2)
 static unsigned long long *multiplier(unsigned long long *k1,
                                       unsigned long long *k2)
 {
+    return NULL;
 }
 
 static unsigned long long *fib_sequence(int k)
