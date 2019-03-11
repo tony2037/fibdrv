@@ -70,6 +70,8 @@ static unsigned long long *multiplier(unsigned long long *k1,
     return r;
 }
 
+static unsigned long long *fast_fib(int k) {}
+
 static unsigned long long *fib_sequence(int k)
 {
     /* FIXME: use clz/ctz and fast algorithms to speed up */
