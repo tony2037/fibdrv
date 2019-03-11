@@ -45,6 +45,15 @@ static unsigned long long *adder(unsigned long long *k1, unsigned long long *k2)
 static unsigned long long *multiplier(unsigned long long *k1,
                                       unsigned long long *k2)
 {
+    unsigned long long *r = kmalloc(2 * sizeof(unsigned long long), GFP_KERNEL);
+    if (r == NULL) {
+        printk("kmalloc error");
+        return NULL;
+    }
+    size_t width = 8 * sizeof(unsigned long long);
+    for (size_t i = 0; i < width; i++) {
+        k2[0] = k2[0] >> i;
+    }
     return NULL;
 }
 
@@ -64,7 +73,7 @@ static unsigned long long *fib_sequence(int k)
     f[1][0] = 1;
 
     for (int i = 2; i <= k; i++) {
-        f[i] = adder(f[i - 1], f[i - 1]);
+        f[i] = adder(f[i - 1], f[i - 2]);
     }
     return f[k];
 }
