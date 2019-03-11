@@ -50,11 +50,24 @@ static unsigned long long *multiplier(unsigned long long *k1,
         printk("kmalloc error");
         return NULL;
     }
+    r[0] = 0;
+    r[1] = 0;
     size_t width = 8 * sizeof(unsigned long long);
     for (size_t i = 0; i < width; i++) {
-        k2[0] = k2[0] >> i;
+        if ((k2[0] >> i) & 0x1) {
+            r[1] += k1[1] << i;
+            unsigned long long t = k1[0];
+            (i == 0) ? (t = 0) : (t = t >> (width - i));
+            r[1] += t;
+            r[0] += k1[0] << i;
+        }
     }
-    return NULL;
+    for (size_t i = 0; i < width; i++) {
+        if ((k2[1] >> i) & 0x1) {
+            r[1] += k1[0] << i;
+        }
+    }
+    return r;
 }
 
 static unsigned long long *fib_sequence(int k)
