@@ -72,12 +72,46 @@ static unsigned long long *multiplier(unsigned long long *k1,
 
 static unsigned long long *fast_fib(int k)
 {
-    if (k == 0)
-        return 0;
-    if (k == 1)
-        return 1;
+    if (k == 0) {
+        unsigned long long *r =
+            kmalloc(2 * sizeof(unsigned long long), GFP_KERNEL);
+        if (r == NULL) {
+            printk("kmalloc error");
+            return NULL;
+        }
+        r[0] = 0;
+        r[1] = 0;
+        return r;
+    }
+    if (k == 1) {
+        unsigned long long *r =
+            kmalloc(2 * sizeof(unsigned long long), GFP_KERNEL);
+        if (r == NULL) {
+            printk("kmalloc error");
+            return NULL;
+        }
+        r[0] = 1;
+        r[1] = 0;
+        return r;
+    }
     /* f(2n) = 2 * f(n+1) * f(n) - [f(n)]^2 */
     /* f(2n+1) = [f(n+1)]^2 + [f(n)]^2 */
+    if (k % 2) {
+        unsigned long long *fn1, *fn;
+        fn1 = fast_fib(((k - 1) >> 1) + 1);
+        fn = fast_fib((k - 1) >> 1);
+        return adder(multiplier(fn1, fn1), multiplier(fn, fn));
+    } else {
+        unsigned long long *fn1, *fn, *front;
+        unsigned long long two[2] = {0};
+        two[0] = 2;
+        fn1 = fast_fib((k >> 1) + 1);
+        fn = fast_fib(k >> 1);
+        front = multiplier(fn1, fn);
+        front = multiplier(two, front);
+        // TBR
+        return NULL;
+    }
 }
 
 static unsigned long long *fib_sequence(int k)
