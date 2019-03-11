@@ -76,6 +76,8 @@ static unsigned long long *fast_fib(int k)
         return 0;
     if (k == 1)
         return 1;
+    /* f(2n) = 2 * f(n+1) * f(n) - [f(n)]^2 */
+    /* f(2n+1) = [f(n+1)]^2 + [f(n)]^2 */
 }
 
 static unsigned long long *fib_sequence(int k)
