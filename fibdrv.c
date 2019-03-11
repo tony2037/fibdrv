@@ -70,7 +70,13 @@ static unsigned long long *multiplier(unsigned long long *k1,
     return r;
 }
 
-static unsigned long long *fast_fib(int k) {}
+static unsigned long long *fast_fib(int k)
+{
+    if (k == 0)
+        return 0;
+    if (k == 1)
+        return 1;
+}
 
 static unsigned long long *fib_sequence(int k)
 {
