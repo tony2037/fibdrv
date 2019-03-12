@@ -27,6 +27,11 @@ static struct cdev *fib_cdev;
 static struct class *fib_class;
 static DEFINE_MUTEX(fib_mutex);
 
+static unsigned long long *subtractor(unsigned long long *k1,
+                                      unsigned long long *k2)
+{
+}
+
 static unsigned long long *adder(unsigned long long *k1, unsigned long long *k2)
 {
     unsigned long long *r = kmalloc(2 * sizeof(unsigned long long), GFP_KERNEL);
