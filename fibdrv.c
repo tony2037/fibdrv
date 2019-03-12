@@ -30,6 +30,9 @@ static DEFINE_MUTEX(fib_mutex);
 static unsigned long long *subtractor(unsigned long long *k1,
                                       unsigned long long *k2)
 {
+    /* Assume k1 >= k2, return positive, or NULL as fail */
+    if (k1 == NULL || k2 == NULL)
+        return NULL;
 }
 
 static unsigned long long *adder(unsigned long long *k1, unsigned long long *k2)
