@@ -43,7 +43,19 @@ int main(int argc, char **argv)
     unsigned long long *r = multiplier(k1, k2);
     if (r == NULL)
         printf("Error\n");
-    printf("Normal Case: [%llu] [%llu] \n", r[1], r[0]);
+    printf("Small number Case: [%llu] [%llu] \n", r[1], r[0]);
     assert(r[1] == 0);
     assert(r[0] == 100 * 200);
+
+    /* Small number same, number*/
+    unsigned long long *t = multiplier(k1, k1);
+    unsigned long long *k = multiplier(k2, k2);
+    if (t == NULL || k == NULL)
+        printf("Error\n");
+    printf("Small number, same, Case t: [%llu] [%llu] \n", t[1], t[0]);
+    printf("Small number, same, Case k: [%llu] [%llu] \n", k[1], k[0]);
+    assert(t[1] == 0);
+    assert(t[0] == 100 * 100);
+    assert(k[1] == 0);
+    assert(k[0] == 200 * 200);
 }
