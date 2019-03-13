@@ -1,6 +1,7 @@
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 static unsigned long long *subtractor(unsigned long long *k1,
                                       unsigned long long *k2)
@@ -43,6 +44,8 @@ int main(int argc, char **argv)
     if (r == NULL)
         printf("Negative\n");
     printf("Normal Case: [%llu] [%llu] \n", r[1], r[0]);
+    assert(r[1] == 1);
+    assert(r[0] == 99);
 
     /* Borrow Case */
     k1[1] = 2;
@@ -53,6 +56,8 @@ int main(int argc, char **argv)
     if (t == NULL)
         printf("Negative\n");
     printf("Borrow Case: [%llu] [%llu] \n", t[1], t[0]);
+    assert(t[1] == 0);
+    assert(t[0] == 0xFFFFFFFFFFFFFFFF);
 
     /* Negative Case */
     k1[1] = 2;
@@ -60,6 +65,7 @@ int main(int argc, char **argv)
     k1[0] = 0;
     k2[0] = 1;
     unsigned long long *k = subtractor(k1, k2);
-    if (r == NULL)
+    if (k == NULL)
         printf("Negative\n");
+    assert(k == NULL);
 }
