@@ -138,8 +138,7 @@ static unsigned long long *fast_fib(int k)
         fn = fast_fib(k >> 1);
         front = multiplier(fn1, fn);
         front = multiplier(two, front);
-        // TBR
-        return NULL;
+        return subtractor(front, multiplier(fn, fn));
     }
 }
 
