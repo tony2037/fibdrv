@@ -42,6 +42,17 @@ static unsigned long long *subtractor(unsigned long long *k1,
         printk("kmalloc error");
         return NULL;
     }
+    if (k1[0] < k2[0]) {
+        /* Borrow */
+        k1[1] -= 1;
+        r[0] = ULONG_MAX + 1 - k2[0] + k1[0];
+        r[1] = k1[1] - k2[1];
+        return r;
+    } else {
+        r[1] = k1[1] - k2[1];
+        r[0] = k1[0] - k2[0];
+        return r;
+    }
 }
 
 static unsigned long long *adder(unsigned long long *k1, unsigned long long *k2)
