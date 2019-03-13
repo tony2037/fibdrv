@@ -125,9 +125,10 @@ static unsigned long long *fast_fib(int k)
     /* f(2n) = 2 * f(n+1) * f(n) - [f(n)]^2 */
     /* f(2n+1) = [f(n+1)]^2 + [f(n)]^2 */
     if (k % 2) {
+        /* Odd */
         unsigned long long *fn1, *fn;
-        fn1 = fast_fib(((k - 1) >> 1) + 1);
-        fn = fast_fib((k - 1) >> 1);
+        fn1 = fast_fib((k >> 1) + 1);
+        fn = fast_fib(k >> 1);
         return adder(multiplier(fn1, fn1), multiplier(fn, fn));
     } else {
         unsigned long long *fn1, *fn, *front;
