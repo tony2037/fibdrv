@@ -35,6 +35,13 @@ static unsigned long long *subtractor(unsigned long long *k1,
         return NULL;
     if (k1[1] < k2[1])
         return NULL;
+    if ((k1[1] == k2[1]) && (k1[0] < k2[0]))
+        return NULL;
+    unsigned long long *r = kmalloc(2 * sizeof(unsigned long long), GFP_KERNEL);
+    if (r == NULL) {
+        printk("kmalloc error");
+        return NULL;
+    }
 }
 
 static unsigned long long *adder(unsigned long long *k1, unsigned long long *k2)
