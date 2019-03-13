@@ -68,4 +68,17 @@ int main(int argc, char **argv)
     printf("Carry Case 1: [%llu] [%llu] \n", c1[1], c1[0]);
     assert(c1[1] == 1);
     assert(c1[0] == 0xFFFFFFFFFFFFFFFE);
+
+    /* carry case 2 */
+    k1[1] = 0;
+    k2[1] = 1;
+    k1[0] = 0xFFFFFFFFFFFFFFFF;
+    k2[0] = 0;
+    unsigned long long *c2 = multiplier(k1, k2);
+    unsigned long long *c2_ = multiplier(k2, k1);
+    printf("Carry Case 2: [%llu] [%llu] \n", c2[1], c2[0]);
+    assert(c2[1] == 0xFFFFFFFFFFFFFFFF);
+    assert(c2[0] == 0);
+    assert(c2[0] == c2_[0]);
+    assert(c2[1] == c2_[1]);
 }
