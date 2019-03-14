@@ -118,39 +118,4 @@ static unsigned long long *fast_fib(int k)
 
 int main(int argc, char **argv)
 {
-    unsigned long long k1[2] = {0};
-    unsigned long long k2[2] = {0};
-    /* Normal Case */
-    k1[1] = 2;
-    k2[1] = 1;
-    k1[0] = 100;
-    k2[0] = 1;
-    unsigned long long *r = subtractor(k1, k2);
-    if (r == NULL)
-        printf("Negative\n");
-    printf("Normal Case: [%llu] [%llu] \n", r[1], r[0]);
-    assert(r[1] == 1);
-    assert(r[0] == 99);
-
-    /* Borrow Case */
-    k1[1] = 2;
-    k2[1] = 1;
-    k1[0] = 0;
-    k2[0] = 1;
-    unsigned long long *t = subtractor(k1, k2);
-    if (t == NULL)
-        printf("Negative\n");
-    printf("Borrow Case: [%llu] [%llu] \n", t[1], t[0]);
-    assert(t[1] == 0);
-    assert(t[0] == 0xFFFFFFFFFFFFFFFF);
-
-    /* Negative Case */
-    k1[1] = 2;
-    k2[1] = 3;
-    k1[0] = 0;
-    k2[0] = 1;
-    unsigned long long *k = subtractor(k1, k2);
-    if (k == NULL)
-        printf("Negative\n");
-    assert(k == NULL);
 }
