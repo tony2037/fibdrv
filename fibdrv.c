@@ -122,6 +122,17 @@ static unsigned long long *fast_fib(int k)
         r[1] = 0;
         return r;
     }
+    if (k == 2) {
+        unsigned long long *r =
+            kmalloc(2 * sizeof(unsigned long long), GFP_KERNEL);
+        if (r == NULL) {
+            printk("kmalloc error");
+            return NULL;
+        }
+        r[0] = 1;
+        r[1] = 0;
+        return r;
+    }
     /* f(2n) = 2 * f(n+1) * f(n) - [f(n)]^2 */
     /* f(2n+1) = [f(n+1)]^2 + [f(n)]^2 */
     if (k % 2) {
