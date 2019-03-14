@@ -118,4 +118,11 @@ static unsigned long long *fast_fib(int k)
 
 int main(int argc, char **argv)
 {
+    /* Base case */
+    unsigned long long *f0, *f1;
+    f0 = fast_fib(0);
+    f1 = fast_fib(1);
+    printf("f(0): [%llu] [%llu]\n", f0[1], f0[0]);
+    printf("f(1): [%llu] [%llu]\n", f1[1], f1[0]);
+    assert(f0[1] == 0 && f0[0] == 0 && f1[1] == 0 && f1[0] == 1);
 }
