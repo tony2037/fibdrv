@@ -161,6 +161,13 @@ int main(int argc, char **argv)
     printf("f(47): [%llu] [%llu]\n", f47[1], f47[0]);
     assert(f47[1] == 0 && f47[0] == 2971215073);
 
+    /* Using fast fibonacci formula case k = 46 */
+    /* should value = [0][1836311903] */
+    unsigned long long *f46;
+    f46 = fast_fib(46);
+    printf("f(46): [%llu] [%llu]\n", f46[1], f46[0]);
+    assert(f46[1] == 0 && f46[0] == 1836311903);
+
     /* Using fast fibonacci formula case k = 93 */
     /* should value = [1][1293530146158671551] */
     unsigned long long *f93;
