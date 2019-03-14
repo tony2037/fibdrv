@@ -139,6 +139,6 @@ int main(int argc, char **argv)
     /* Using fast fibonacci formula case 1 */
     unsigned long long *f2;
     f2 = fast_fib(2);
-    printf("f(1): [%llu] [%llu]\n", f2[1], f2[0]);
+    printf("f(2): [%llu] [%llu]\n", f2[1], f2[0]);
     assert(f2[1] == 0 && f2[0] == 1);
 }
