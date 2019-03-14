@@ -148,7 +148,7 @@ int main(int argc, char **argv)
     printf("f(3): [%llu] [%llu]\n", f3[1], f3[0]);
     assert(f3[1] == 0 && f3[0] == 2);
 
-    /* Using fast fibonacci formula case k = 3 */
+    /* Using fast fibonacci formula case k = 4 */
     unsigned long long *f4;
     f4 = fast_fib(4);
     printf("f(4): [%llu] [%llu]\n", f4[1], f4[0]);
