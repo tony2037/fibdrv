@@ -136,7 +136,7 @@ int main(int argc, char **argv)
     printf("f(1): [%llu] [%llu]\n", f1[1], f1[0]);
     assert(f0[1] == 0 && f0[0] == 0 && f1[1] == 0 && f1[0] == 1);
 
-    /* Using fast fibonacci formula case 1 */
+    /* Using fast fibonacci formula case k = 2 */
     unsigned long long *f2;
     f2 = fast_fib(2);
     printf("f(2): [%llu] [%llu]\n", f2[1], f2[0]);
