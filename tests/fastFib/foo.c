@@ -96,6 +96,16 @@ static unsigned long long *fast_fib(int k)
         r[1] = 0;
         return r;
     }
+    if (k == 2) {
+        unsigned long long *r = malloc(2 * sizeof(unsigned long long));
+        if (r == NULL) {
+            printf("kmalloc error");
+            return NULL;
+        }
+        r[0] = 1;
+        r[1] = 0;
+        return r;
+    }
     /* f(2n) = 2 * f(n+1) * f(n) - [f(n)]^2 */
     /* f(2n+1) = [f(n+1)]^2 + [f(n)]^2 */
     if (k % 2) {
@@ -125,4 +135,10 @@ int main(int argc, char **argv)
     printf("f(0): [%llu] [%llu]\n", f0[1], f0[0]);
     printf("f(1): [%llu] [%llu]\n", f1[1], f1[0]);
     assert(f0[1] == 0 && f0[0] == 0 && f1[1] == 0 && f1[0] == 1);
+
+    /* Using fast fibonacci formula case 1 */
+    unsigned long long *f2;
+    f2 = fast_fib(2);
+    printf("f(1): [%llu] [%llu]\n", f2[1], f2[0]);
+    assert(f2[1] == 0 && f2[0] == 1);
 }
