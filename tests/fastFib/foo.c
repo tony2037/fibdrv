@@ -141,4 +141,10 @@ int main(int argc, char **argv)
     f2 = fast_fib(2);
     printf("f(2): [%llu] [%llu]\n", f2[1], f2[0]);
     assert(f2[1] == 0 && f2[0] == 1);
+
+    /* Using fast fibonacci formula case k = 3 */
+    unsigned long long *f3;
+    f3 = fast_fib(3);
+    printf("f(3): [%llu] [%llu]\n", f3[1], f3[0]);
+    assert(f3[1] == 0 && f3[0] == 2);
 }
