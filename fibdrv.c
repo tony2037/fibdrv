@@ -195,7 +195,6 @@ static ssize_t fib_read(struct file *file,
                         size_t size,
                         loff_t *offset)
 {
-    // memcpy(buf, "Ztex", 4);
     unsigned long long *f;
     f = fib_sequence(*offset);
     memset(buf, 0, 16);
