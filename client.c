@@ -32,6 +32,8 @@ int main()
 
     for (i = 0; i <= offset; i++) {
         lseek(fd, i, SEEK_SET);
+        memset(buf, 0, 16);
+        memcpy(buf, "fast", 4);
         sz = read(fd, buf, 16);
         printf("Reading from " FIB_DEV
                " at offset %d, returned the sequence "
