@@ -30,6 +30,29 @@ static DEFINE_MUTEX(fib_mutex);
 static unsigned long long *subtractor(unsigned long long *k1,
                                       unsigned long long *k2)
 {
+    /* Assume k1 >= k2, return positive, or NULL as fail */
+    if (k1 == NULL || k2 == NULL)
+        return NULL;
+    if (k1[1] < k2[1])
+        return NULL;
+    if ((k1[1] == k2[1]) && (k1[0] < k2[0]))
+        return NULL;
+    unsigned long long *r = kmalloc(2 * sizeof(unsigned long long), GFP_KERNEL);
+    if (r == NULL) {
+        printk("kmalloc error");
+        return NULL;
+    }
+    if (k1[0] < k2[0]) {
+        /* Borrow */
+        k1[1] -= 1;
+        r[0] = ULONG_MAX + 1 - k2[0] + k1[0];
+        r[1] = k1[1] - k2[1];
+        return r;
+    } else {
+        r[1] = k1[1] - k2[1];
+        r[0] = k1[0] - k2[0];
+        return r;
+    }
 }
 
 static unsigned long long *adder(unsigned long long *k1, unsigned long long *k2)
@@ -99,12 +122,24 @@ static unsigned long long *fast_fib(int k)
         r[1] = 0;
         return r;
     }
+    if (k == 2) {
+        unsigned long long *r =
+            kmalloc(2 * sizeof(unsigned long long), GFP_KERNEL);
+        if (r == NULL) {
+            printk("kmalloc error");
+            return NULL;
+        }
+        r[0] = 1;
+        r[1] = 0;
+        return r;
+    }
     /* f(2n) = 2 * f(n+1) * f(n) - [f(n)]^2 */
     /* f(2n+1) = [f(n+1)]^2 + [f(n)]^2 */
     if (k % 2) {
+        /* Odd */
         unsigned long long *fn1, *fn;
-        fn1 = fast_fib(((k - 1) >> 1) + 1);
-        fn = fast_fib((k - 1) >> 1);
+        fn1 = fast_fib((k >> 1) + 1);
+        fn = fast_fib(k >> 1);
         return adder(multiplier(fn1, fn1), multiplier(fn, fn));
     } else {
         unsigned long long *fn1, *fn, *front;
@@ -114,8 +149,7 @@ static unsigned long long *fast_fib(int k)
         fn = fast_fib(k >> 1);
         front = multiplier(fn1, fn);
         front = multiplier(two, front);
-        // TBR
-        return NULL;
+        return subtractor(front, multiplier(fn, fn));
     }
 }
 
