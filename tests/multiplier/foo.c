@@ -1,7 +1,7 @@
+#include <assert.h>
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
 
 static unsigned long long *multiplier(unsigned long long *k1,
                                       unsigned long long *k2)
@@ -81,4 +81,13 @@ int main(int argc, char **argv)
     assert(c2[0] == 0);
     assert(c2[0] == c2_[0]);
     assert(c2[1] == c2_[1]);
+
+    /* carry case 3 */
+    k1[1] = 0;
+    k1[0] = 7778742049;  // f(49)
+    k2[1] = 0;
+    k2[0] = 4807526976;  // f(48)
+    unsigned long long *c3 = multiplier(k1, k2);
+    printf("Carry Case 3: [%llu] [%llu] \n", c3[1], c3[0]);
+    assert(c3[1] == 0x2 && c3[0] == 503024092493910592);
 }
