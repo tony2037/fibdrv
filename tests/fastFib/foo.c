@@ -63,7 +63,11 @@ static unsigned long long *multiplier(unsigned long long *k1,
             unsigned long long t = k1[0];
             (i == 0) ? (t = 0) : (t = t >> (width - i));
             r[1] += t;
-            r[0] += k1[0] << i;
+            unsigned long long tmp[2] = {0};
+            tmp[1] = 0;
+            tmp[0] = k1[0] << i;
+            r = adder(r, tmp);
+            // r[0] += k1[0] << i;
         }
     }
     for (size_t i = 0; i < width; i++) {
@@ -187,5 +191,5 @@ int main(int argc, char **argv)
     unsigned long long *f96;
     f96 = fast_fib(96);
     printf("f(96): [%llu] [%llu]\n", f96[1], f96[0]);
-    // assert(f96[1] == 2 && f96[0] == 503024092493910592U);
+    assert(f96[1] == 2 && f96[0] == 14787220707439219840U);
 }
