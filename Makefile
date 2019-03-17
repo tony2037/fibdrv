@@ -27,8 +27,11 @@ unload:
 
 client: client.c
 	$(CC) -g -o $@ $^
-verify: verify.py
-        $(PY) $^
+
+verify: verify.py client
+	sudo ./client > result.txt
+	$(PY) $<
+
 PRINTF = env printf
 PASS_COLOR = \e[32;01m
 NO_COLOR = \e[0m
