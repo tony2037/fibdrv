@@ -1,7 +1,23 @@
+#include <assert.h>
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
+
+
+static unsigned long long *adder(unsigned long long *k1, unsigned long long *k2)
+{
+    unsigned long long *r = malloc(2 * sizeof(unsigned long long));
+    if (r == NULL) {
+        printf("kmalloc error");
+        return NULL;
+    }
+    char carry = 0;
+    if ((ULONG_MAX - k2[0]) < k1[0])
+        carry = 1;
+    r[0] = k1[0] + k2[0];
+    r[1] = k1[1] + k2[1] + (unsigned long long) (carry);
+    return r;
+}
 
 static unsigned long long *multiplier(unsigned long long *k1,
                                       unsigned long long *k2)
@@ -20,7 +36,10 @@ static unsigned long long *multiplier(unsigned long long *k1,
             unsigned long long t = k1[0];
             (i == 0) ? (t = 0) : (t = t >> (width - i));
             r[1] += t;
-            r[0] += k1[0] << i;
+            unsigned long long tmp[2] = {0};
+            tmp[1] = 0;
+            tmp[0] = k1[0] << i;
+            r = adder(r, tmp);
         }
     }
     for (size_t i = 0; i < width; i++) {
@@ -81,4 +100,13 @@ int main(int argc, char **argv)
     assert(c2[0] == 0);
     assert(c2[0] == c2_[0]);
     assert(c2[1] == c2_[1]);
+
+    /* carry case 3 */
+    k1[1] = 0;
+    k1[0] = 7778742049;  // f(49)
+    k2[1] = 0;
+    k2[0] = 4807526976;  // f(48)
+    unsigned long long *c3 = multiplier(k1, k2);
+    printf("Carry Case 3: [%llu] [%llu] \n", c3[1], c3[0]);
+    assert(c3[1] == 0x2 && c3[0] == 503024092493910592);
 }
