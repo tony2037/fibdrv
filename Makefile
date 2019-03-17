@@ -15,6 +15,7 @@ all: $(GIT_HOOKS) client
 $(GIT_HOOKS):
 	@scripts/install-git-hooks
 	@echo
+PY = python3
 
 clean:
 	$(MAKE) -C $(KDIR) M=$(PWD) clean
@@ -26,7 +27,8 @@ unload:
 
 client: client.c
 	$(CC) -g -o $@ $^
-
+verify: verify.py
+        $(PY) $^
 PRINTF = env printf
 PASS_COLOR = \e[32;01m
 NO_COLOR = \e[0m
