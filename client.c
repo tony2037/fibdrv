@@ -35,7 +35,7 @@ int main()
         memset(buf, 0, 16);
         memcpy(buf, "fast", 4);
         sz = read(fd, buf, 16);
-        printf("Reading from " FIB_DEV
+        printf("(fast)Reading from " FIB_DEV
                " at offset %d, returned the sequence "
                "%llu + (%d * 18446744073709551616).\n",
                i, sz, buf[8]);
@@ -45,10 +45,10 @@ int main()
     for (i = offset; i >= 0; i--) {
         lseek(fd, i, SEEK_SET);
         sz = read(fd, buf, 16);
-        printf("Reading from " FIB_DEV
+        printf("(Regular)Reading from " FIB_DEV
                " at offset %d, returned the sequence "
-               "%lld.\n",
-               i, sz);
+               "%llu + (%d * 18446744073709551616).\n",
+               i, sz, buf[8]);
     }
 
     close(fd);

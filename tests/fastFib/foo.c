@@ -181,4 +181,11 @@ int main(int argc, char **argv)
     f94 = fast_fib(94);
     printf("f(94): [%llu] [%llu]\n", f94[1], f94[0]);
     assert(f94[1] == 1 && f94[0] == 1293530146158671551U);
+
+    /* Using fast fibonacci formula case k = 96 */
+    /* should value = [2][14787220707439219840] */
+    unsigned long long *f96;
+    f96 = fast_fib(96);
+    printf("f(96): [%llu] [%llu]\n", f96[1], f96[0]);
+    assert(f96[1] == 2 && f96[0] == 14787220707439219840U);
 }

@@ -196,7 +196,12 @@ static ssize_t fib_read(struct file *file,
                         loff_t *offset)
 {
     unsigned long long *f;
-    f = fib_sequence(*offset);
+    if (!memcmp(buf, "fast", 4)) {
+        f = fast_fib(*offset);
+    } else {
+        f = fib_sequence(*offset);
+    }
+
     memset(buf, 0, 16);
     for (size_t i = 0; i < 8; i++) {
         buf[i] = (f[0] >> (4 * i)) & 0xFF;
